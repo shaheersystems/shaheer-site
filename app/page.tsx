@@ -8,7 +8,7 @@ import { SiteFooter } from "@/components/portfolio/site-footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-svh flex-col bg-paper text-ink">
+    <div className="flex min-h-svh flex-col bg-base text-ink">
       <SiteNav />
       <main className="flex-1">
         <Hero />

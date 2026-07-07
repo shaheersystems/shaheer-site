@@ -25,6 +25,12 @@
       "skillPath": "skills/fixing-motion-performance/SKILL.md",
       "computedHash": "c1aca76fe18e8594f401cf78e5e76be24f182ce63167a398bdd4458f2a07639f"
     },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "4f78ff7cd3a4f637b6fe30dbbab4a80a19dd63fa62d9352bed461ccfdbcbbf43"
+    },
     "ui-skills-root": {
       "source": "ibelick/ui-skills",
       "sourceType": "github",

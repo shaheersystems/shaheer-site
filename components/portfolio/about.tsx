@@ -1,5 +1,9 @@
+import { Fragment } from "react";
 import { Reveal } from "./reveal";
 import { SectionLabel } from "./section-label";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const STATS = [
   { value: "6+", label: "Years building" },
@@ -56,20 +60,23 @@ export function About() {
 
           <div className="mt-2 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-4">
             {STATS.map((s) => (
-              <div key={s.label} className="bg-paper p-5">
+              <Card
+                key={s.label}
+                className="gap-0 rounded-none border-0 bg-paper p-5 ring-0"
+              >
                 <div className="text-3xl font-black tracking-tight text-ink">
                   {s.value}
                 </div>
                 <div className="mt-1 font-mono text-[11px] uppercase tracking-wide text-muted-ink">
                   {s.label}
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </Reveal>
 
         <Reveal delay={0.1} className="flex flex-col gap-8">
-          <div className="flex flex-col gap-5 rounded-3xl border border-line bg-paper p-7">
+          <Card className="gap-5 rounded-3xl border border-line bg-paper p-7 ring-0">
             <span className="font-mono text-xs uppercase tracking-[0.18em] text-muted-ink">
               Toolkit
             </span>
@@ -80,34 +87,36 @@ export function About() {
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {group.items.map((item) => (
-                    <span
+                    <Badge
                       key={item}
-                      className="rounded-full border border-line-strong px-3 py-1 text-sm text-ink/80"
+                      variant="outline"
+                      className="h-auto rounded-full border-line-strong px-3 py-1 text-sm font-normal text-ink/80"
                     >
                       {item}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               </div>
             ))}
-          </div>
+          </Card>
 
           <div className="flex flex-col gap-1">
             <span className="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-muted-ink">
               Recent path
             </span>
             {TIMELINE.map((t) => (
-              <div
-                key={t.year}
-                className="flex items-baseline gap-4 border-t border-line py-3.5 last:border-b"
-              >
-                <span className="font-mono text-sm text-brand">{t.year}</span>
-                <div className="flex flex-1 flex-wrap items-baseline justify-between gap-x-3">
-                  <span className="font-medium">{t.role}</span>
-                  <span className="text-sm text-muted-ink">{t.place}</span>
+              <Fragment key={t.year}>
+                <Separator className="bg-line" />
+                <div className="flex items-baseline gap-4 py-3.5">
+                  <span className="font-mono text-sm text-brand">{t.year}</span>
+                  <div className="flex flex-1 flex-wrap items-baseline justify-between gap-x-3">
+                    <span className="font-medium">{t.role}</span>
+                    <span className="text-sm text-muted-ink">{t.place}</span>
+                  </div>
                 </div>
-              </div>
+              </Fragment>
             ))}
+            <Separator className="bg-line" />
           </div>
         </Reveal>
       </div>

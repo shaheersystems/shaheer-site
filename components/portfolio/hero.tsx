@@ -2,6 +2,8 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const STACK = [
   "TypeScript",
@@ -67,7 +69,10 @@ export function Hero() {
           variants={item}
           className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-muted-ink"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-paper px-3 py-1">
+          <Badge
+            variant="outline"
+            className="h-auto gap-2 border-line-strong bg-paper px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-muted-ink"
+          >
             <span className="relative flex h-1.5 w-1.5">
               {!reduce && (
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
@@ -75,7 +80,7 @@ export function Hero() {
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
             </span>
             Available for projects
-          </span>
+          </Badge>
           <span className="hidden sm:inline">Software Engineer</span>
           <span className="hidden sm:inline text-line-strong">/</span>
           <span className="hidden sm:inline">Lahore → Worldwide</span>
@@ -118,20 +123,25 @@ export function Hero() {
         </motion.p>
 
         <motion.div variants={item} className="flex flex-wrap items-center gap-3">
-          <a
-            href="#contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-base font-medium text-paper transition-colors hover:bg-brand"
+          <Button
+            asChild
+            className="group h-auto rounded-full bg-ink px-6 py-3.5 text-base text-paper hover:bg-brand hover:text-paper"
           >
-            Start a project
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-          <a
-            href="#work"
-            className="group inline-flex items-center gap-2 rounded-full border border-line-strong bg-paper px-6 py-3.5 text-base font-medium transition-colors hover:border-ink"
+            <a href="#contact">
+              Start a project
+              <ArrowUpRight data-icon="inline-end" className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="group h-auto rounded-full border-line-strong bg-transparent px-6 py-3.5 text-base text-ink hover:border-ink hover:bg-paper hover:text-ink"
           >
-            View selected work
-            <ArrowDownRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
-          </a>
+            <a href="#work">
+              View selected work
+              <ArrowDownRight data-icon="inline-end" className="transition-transform duration-300 group-hover:translate-y-0.5" />
+            </a>
+          </Button>
         </motion.div>
       </motion.div>
 
