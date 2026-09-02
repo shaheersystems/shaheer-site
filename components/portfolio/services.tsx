@@ -1,10 +1,6 @@
 import { Boxes, Code2, Gauge, Smartphone } from "lucide-react";
 import { Reveal } from "./reveal";
-import {
-  Card,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
+import { SectionLabel } from "./section-label";
 
 const SERVICES = [
   {
@@ -33,41 +29,37 @@ export function Services() {
   return (
     <section
       id="services"
-      className="scroll-mt-24 border-y border-line bg-paper py-24 text-ink sm:py-32"
+      className="scroll-mt-14 border-b border-line bg-paper"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <Reveal className="flex flex-col gap-4">
-          <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-muted-ink">
-            <span className="text-brand">02</span>
-            <span className="h-px w-8 bg-line-strong" />
-            <span>What I do</span>
-          </div>
-          <h2 className="max-w-2xl text-balance text-3xl font-black tracking-tight sm:text-5xl">
+      <div className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 sm:py-28">
+        <Reveal className="flex flex-col gap-5">
+          <SectionLabel code="02">What I do</SectionLabel>
+          <h2 className="font-display max-w-2xl text-balance text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.02] tracking-[-0.015em]">
             One engineer, the whole stack.
           </h2>
-          <p className="max-w-xl font-light leading-relaxed text-muted-ink">
+          <p className="max-w-[58ch] text-pretty leading-relaxed text-muted-ink">
             You get a single point of contact who can take a feature from idea
             to production — no handoffs, no telephone game.
           </p>
         </Reveal>
+      </div>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.06} className="h-full">
-              <Card className="group h-full gap-4 rounded-none border-0 bg-base p-7 ring-0 transition-colors duration-300 hover:bg-surface-2">
-                <span className="grid h-11 w-11 place-items-center rounded-full border border-line-strong text-brand transition-colors duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-paper">
-                  <s.icon className="h-5 w-5" />
-                </span>
-                <CardTitle className="text-xl font-bold tracking-tight">
-                  {s.title}
-                </CardTitle>
-                <CardDescription className="text-sm font-light leading-relaxed text-muted-ink">
-                  {s.body}
-                </CardDescription>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
+      <div className="grid gap-px border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {SERVICES.map((s, i) => (
+          <Reveal key={s.title} delay={i * 0.05} className="h-full">
+            <div className="group flex h-full flex-col gap-4 bg-paper p-6 transition-colors duration-300 hover:bg-surface-2 sm:p-8">
+              <span className="grid size-10 place-items-center border border-line-strong text-brand transition-colors duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-on-brand">
+                <s.icon className="size-4.5" strokeWidth={1.75} />
+              </span>
+              <h3 className="font-display text-2xl leading-tight tracking-[-0.01em]">
+                {s.title}
+              </h3>
+              <p className="text-pretty text-sm leading-relaxed text-muted-ink">
+                {s.body}
+              </p>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </section>
   );

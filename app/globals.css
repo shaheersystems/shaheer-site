@@ -4,26 +4,61 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------------------------------------------------------------------------
+   TOKENS
+
+   Two tiers, per better-colors:
+   - Primitives (`--n-*`, `--o-*`) name a value and are never used in a
+     component. One cool-neutral ramp (hue 255 at very low chroma) plus one
+     accent. The neutrals are tinted toward the accent rather than away from it,
+     so the palette reads as one considered system instead of a gray with a
+     color dropped on top.
+   - Semantics (`--canvas`, `--ink`, …) name a job, point at a primitive, and are
+     the only tier components reference. Light values live on `:root`, dark
+     values on `.dark`, so a single class on <html> flips the whole system.
+
+   Every foreground/background pair below was measured, not eyeballed:
+     dark  ink/canvas 16.74:1 · muted-ink/canvas 7.10:1 · brand/canvas 6.99:1
+     light ink/canvas 16.94:1 · muted-ink/canvas 5.52:1 · brand/paper 5.64:1
+   All pass WCAG AA for body text in both directions, and every declared color
+   is inside the sRGB gamut.
+--------------------------------------------------------------------------- */
+
 @theme inline {
+  /* The families are loaded by next/font in app/layout.tsx, which self-hosts
+     them and defines these three vars on <html>.
+
+     They are NOT loaded with an `@import url(...)` to Google Fonts: Turbopack
+     drops a remote @import from the compiled stylesheet entirely, so the
+     families silently never arrive and every heading renders in the fallback
+     serif. Self-hosting also removes the render-blocking request. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia,
+    "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  /* Semantic surfaces + text. `paper` is the raised surface, `surface-2` the
+     second elevation / hover state. Named "brand" not "accent" because shadcn
+     reserves --color-accent. */
+  --color-canvas: var(--canvas);
+  --color-paper: var(--paper);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted-ink: var(--muted-ink);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  /* Text/icons sitting on a solid `ink` fill (inverted buttons, the logo mark).
+     Needed as its own token because `text-base` is already Tailwind's
+     font-size utility — the surface token can't be borrowed for the
+     foreground role here. */
+  --color-on-ink: var(--on-ink);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-din: var(--font-din);
-  --font-sans: var(--font-din);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-din);
-
-  /* "Standard Issue" portfolio palette — dark edition.
-     Layered darks give depth: `base` (deepest page bg) < `paper`
-     (raised card/nav surface) < `surface-2` (hover / second elevation).
-     NOTE: named "brand" not "accent" — shadcn reserves --color-accent. */
-  --color-base: #0c0b0a;
-  --color-paper: #16150f;
-  --color-surface-2: #201e17;
-  --color-ink: #f4f2ea;
-  --color-brand: #ff5a30;
-  --color-muted-ink: #969389;
-  --color-line: #262420;
-  --color-line-strong: #38352d;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -53,102 +88,172 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Hard edges everywhere. Every shadcn primitive derives its corner from one
+     of these, so zeroing them here squares the whole component library
+     without touching components/ui. */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
 }
 
 :root {
-  /* Portfolio is dark-only: root mirrors the .dark shadcn scale so any
-     shadcn primitive (Button, etc.) renders dark without a toggle. */
-  color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  color-scheme: light;
+  --radius: 0px;
+
+  /* --- primitives: cool-neutral ramp (hue 255) --- */
+  --n-0: oklch(1 0 0);
+  --n-50: oklch(0.983 0.002 255);
+  --n-100: oklch(0.958 0.003 255);
+  --n-200: oklch(0.91 0.005 255);
+  --n-300: oklch(0.832 0.008 255);
+  --n-500: oklch(0.508 0.012 255);
+  --n-900: oklch(0.208 0.012 255);
+  /* --- primitives: accent. One hue at two lightnesses — same color, one
+         meaning — set to what each background can carry. A deep, unsaturated
+         blue rather than a bright one: the vivid end of this hue reads
+         promotional, this end reads considered. --- */
+  --o-500: oklch(0.52 0.18 258);
+  --o-400: oklch(0.7 0.152 258);
+
+  /* --- semantics: light --- */
+  --canvas: var(--n-50);
+  --paper: var(--n-0);
+  --surface-2: var(--n-100);
+  --line: var(--n-200);
+  --line-strong: var(--n-300);
+  --ink: var(--n-900);
+  --muted-ink: var(--n-500);
+  --brand: var(--o-500);
+  --on-brand: var(--n-0);
+  /* Resolves per theme without a second declaration: `canvas` is the page floor
+     and `ink` its opposite in both. Measured 17.0:1 light, 16.7:1 dark. */
+  --on-ink: var(--canvas);
+
+  /* shadcn scale mapped onto the ramp above so its primitives inherit the
+     same system instead of running a parallel palette. */
+  --background: var(--canvas);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--ink);
+  /* Hue 27 sits ~130° off the accent, so destructive and primary never read as
+     the same signal side by side. */
+  --destructive: oklch(0.55 0.19 27);
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--brand);
+  --chart-1: var(--brand);
+  --chart-2: oklch(0.6 0.02 255);
+  --chart-3: oklch(0.45 0.02 255);
+  --chart-4: oklch(0.75 0.02 255);
+  --chart-5: oklch(0.3 0.02 255);
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--brand);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  color-scheme: dark;
+
+  /* Matte dark: the floor is lifted off pure black and carries a trace of the
+     accent hue, so surfaces read as flat pigment rather than glass. Steps sit
+     close together — depth comes from hairlines, not from glow. */
+  --n-0: oklch(0.216 0.006 255);
+  --n-50: oklch(0.18 0.006 255);
+  --n-100: oklch(0.255 0.007 255);
+  --n-200: oklch(0.292 0.008 255);
+  --n-300: oklch(0.375 0.01 255);
+  --n-500: oklch(0.702 0.012 255);
+  --n-900: oklch(0.96 0.003 255);
+
+  /* Only the primitives are restated. Every semantic token on :root already
+     points through a var(), so redefining the ramp re-themes the whole system
+     — the two exceptions below are the ones that genuinely differ in role. */
+  --brand: var(--o-400);
+  --on-brand: var(--n-50);
+
+  --destructive: oklch(0.7 0.19 25);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-base text-ink;
-  }
+
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* Inter is optically sized; let the font pick its own grade per size. */
+    font-optical-sizing: auto;
   }
+
+  body {
+    @apply bg-canvas text-ink;
+    font-synthesis-weight: none;
+  }
+
+  /* Instrument Serif ships one weight. Never let the browser fake a bolder
+     one — a synthesized face is not the face the design uses. */
+  .font-display {
+    font-weight: 400;
+    font-synthesis: none;
+  }
+
   ::selection {
-    background-color: var(--color-brand);
-    color: var(--color-paper);
+    background-color: var(--brand);
+    color: var(--on-brand);
   }
+
+  /* Focus ring reads as a square bracket, not a halo. */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Structure utilities
+--------------------------------------------------------------------------- */
+
+/* The page's vertical rules: a pair of hairlines down the edges of the content
+   column — the grid made visible.
+
+   Registered with `@utility` rather than written as a plain class so Tailwind
+   variants compose with it. As a bare `.rail`, `xl:rail` matches no utility and
+   silently emits nothing. */
+@utility rail {
+  border-inline: 1px solid var(--line);
+}
+
+/* Fine grid used behind the hero. Sits at low opacity so it reads as texture,
+   never as content. */
+@utility grid-field {
+  background-image: linear-gradient(
+      to right,
+      var(--line) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -175,7 +280,7 @@
 }
 
 .animate-marquee {
-  animation: marquee 32s linear infinite;
+  animation: marquee 42s linear infinite;
 }
 
 .marquee-group:hover .animate-marquee {
