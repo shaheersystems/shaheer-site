@@ -18,8 +18,8 @@ function apply(theme: Theme) {
   document.documentElement.style.colorScheme = dark ? "dark" : "light";
 }
 
-/* Module-level store: the nav and the mobile sheet each mount a toggle, and
-   both must reflect the same value. */
+/* Module-level store: the footer toggle and any future mount must read the same
+   value. */
 const listeners = new Set<() => void>();
 let current: Theme | null = null;
 

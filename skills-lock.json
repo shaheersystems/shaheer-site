@@ -31,6 +31,12 @@
       "skillPath": "skills/shadcn/SKILL.md",
       "computedHash": "4f78ff7cd3a4f637b6fe30dbbab4a80a19dd63fa62d9352bed461ccfdbcbbf43"
     },
+    "threejs-animation": {
+      "source": "cloudai-x/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-animation/SKILL.md",
+      "computedHash": "457900cae6babbe092e3226a2ac9ae5d09a84199c1b3d5050ed400d4f56a9d82"
+    },
     "ui-skills-root": {
       "source": "ibelick/ui-skills",
       "sourceType": "github",

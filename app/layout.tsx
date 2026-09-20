@@ -1,14 +1,27 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { THEME_SCRIPT } from "@/lib/theme-script";
 import "./globals.css";
 
 /* next/font self-hosts these and exposes each as a CSS variable that
-   app/globals.css maps onto --font-display / --font-sans / --font-mono.
+   app/globals.css maps onto --font-sans / --font-display / --font-mono.
 
    Loaded here rather than with an `@import url(...)` to Google Fonts inside
    globals.css: Turbopack strips a remote @import out of the compiled
-   stylesheet, so the families never arrive and headings fall back to Georgia. */
+   stylesheet, so the families never arrive and the page falls back to the
+   system stack. */
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 const instrumentSerif = Instrument_Serif({
   // The family ships a single weight; it has no bolder cut to request.
@@ -19,26 +32,14 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Shaheer — Full-stack Engineer",
   description:
-    "Shaheer is a full-stack software engineer who builds fast, reliable products from the database to the last pixel. Available for new projects.",
+    "Full-stack engineer working the whole depth of a product — data model, API, interface. Six years across fintech, health, and commerce. Available for contract work.",
   openGraph: {
     title: "Shaheer — Full-stack Engineer",
     description:
-      "Full-stack engineer building software that ships, scales, and performs.",
+      "Full-stack engineer working the whole depth of a product — data model, API, interface.",
     type: "website",
   },
 };
@@ -55,7 +56,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
       suppressHydrationWarning
     >
       <head>
