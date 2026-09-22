@@ -1,4 +1,4 @@
-import { Lattice } from "@/components/lattice/lattice";
+import { Field } from "@/components/field/field";
 import { EMAIL, GITHUB } from "@/components/site/content";
 import { LinkColumns } from "@/components/site/link-columns";
 import { Reveal } from "@/components/site/reveal";
@@ -9,13 +9,14 @@ import { SiteFooter } from "@/components/site/site-footer";
  * so a nav bar would only be a second way to reach four things that are
  * already on screen.
  *
- * The column is 34rem wide and the type is set at 14px — a measure of roughly
- * 62 characters, which is where prose stops needing the eye to travel.
+ * The column is 40rem wide and the type is set at 14px — a measure of roughly
+ * 75 characters, the long end of comfortable, which gives the three-column
+ * index below room to breathe.
  */
 export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
-      <main className="mx-auto w-full max-w-[34rem] flex-1 px-6 pt-24 pb-24 text-sm leading-[1.75] sm:pt-32">
+      <main className="mx-auto w-full max-w-[40rem] flex-1 px-6 pt-24 pb-24 text-sm leading-[1.75] sm:pt-32">
         <Reveal as="section">
           <h1 className="font-medium text-ink">Shaheer</h1>
 
@@ -36,10 +37,11 @@ export default function Home() {
         </Reveal>
 
         {/* Sits in the gap between the introduction and the index, where the
-            page would otherwise just be empty. Masked at both edges so it
-            reads as ambient rather than as a framed illustration. */}
-        <Reveal className="mt-14 mb-16" y={0}>
-          <Lattice className="fade-x" />
+            page would otherwise just be empty. Bleeds past the column on wider
+            screens and is masked at every edge, so it reads as ambient rather
+            than as a framed illustration. */}
+        <Reveal className="mt-10 mb-12 sm:-mx-16" y={0}>
+          <Field className="fade-edges" />
         </Reveal>
 
         <LinkColumns />

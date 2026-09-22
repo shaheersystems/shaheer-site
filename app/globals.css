@@ -139,10 +139,11 @@
   --on-ink: var(--canvas);
 
   /* WebGL cannot read an oklch() custom property — THREE.Color parses hex,
-     rgb() and named colors only. The lattice reads this token instead, so the
-     canvas stays on the same ink as the text around it. Kept numerically in
-     step with `--ink` above. */
+     rgb() and named colors only. The field reads these tokens instead, so the
+     canvas stays on the same ink and accent as the text around it. Kept
+     numerically in step with `--ink` and `--brand`. */
   --viz-ink: #211f1b;
+  --viz-brand: #32669a;
 
   /* shadcn scale mapped onto the ramp above so its primitives inherit the
      same system instead of running a parallel palette. */
@@ -202,6 +203,7 @@
   --brand: var(--o-400);
   --on-brand: var(--n-50);
   --viz-ink: #efeeec;
+  --viz-brand: #79a9db;
 
   --destructive: oklch(0.7 0.19 25);
 }
@@ -270,16 +272,14 @@
   }
 }
 
-/* Fades the ambient lattice into the page at both edges so it reads as part of
-   the column rather than as a framed illustration dropped into it. */
-@utility fade-x {
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 14%,
-    black 86%,
-    transparent
-  );
+/* Fades the ambient field into the page on all four sides so it reads as part
+   of the column rather than as a framed illustration dropped into it. Two
+   gradients intersected, so the corners fall off in both directions. */
+@utility fade-edges {
+  mask-image:
+    linear-gradient(to right, transparent, black 16%, black 84%, transparent),
+    linear-gradient(to bottom, transparent, black 18%, black 78%, transparent);
+  mask-composite: intersect;
 }
 
 @media (prefers-reduced-motion: reduce) {
