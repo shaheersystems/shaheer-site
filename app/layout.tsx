@@ -35,7 +35,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Shaheer — Full-stack Engineer",
   description:
-    "Full-stack engineer working the whole depth of a product — data model, API, interface. Six years across fintech, health, and commerce. Available for contract work.",
+    "Full-stack engineer working the whole depth of a product — data model, API, interface. Three years building platforms for domains, hosting and compliance. Available for contract work.",
   openGraph: {
     title: "Shaheer — Full-stack Engineer",
     description:

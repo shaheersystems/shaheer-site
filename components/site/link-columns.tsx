@@ -2,13 +2,13 @@ import { COLUMNS, type Entry } from "./content";
 import { Reveal } from "./reveal";
 
 /**
- * The index of the site: three labelled columns of short entries. The only
- * place on the page with more than one level of hierarchy, and it gets there
- * with weight and color alone — no rules, no cards, no badges.
+ * The index of the site: two labelled columns of short entries, set apart
+ * with weight and color alone — no rules, no cards, no badges. The projects
+ * have their own grid above it.
  */
 export function LinkColumns() {
   return (
-    <section aria-label="Index" className="grid gap-x-6 gap-y-10 sm:grid-cols-3">
+    <section aria-label="Index" className="grid gap-x-6 gap-y-10 sm:grid-cols-2">
       {COLUMNS.map((column, i) => (
         <Reveal key={column.heading} delay={i * 0.06}>
           <h2 className="text-muted-ink">{column.heading}</h2>
@@ -53,7 +53,7 @@ function EntryTitle({ entry }: { entry: Entry }) {
  * `text-decoration: none` on the SVG keeps the link's underline off it — an
  * underlined arrow reads as a rendering bug.
  */
-function ExternalArrow() {
+export function ExternalArrow() {
   return (
     <svg
       viewBox="0 0 10 10"

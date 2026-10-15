@@ -16,6 +16,51 @@ export type Entry = {
   external?: boolean;
 };
 
+export type Project = {
+  title: string;
+  /** Where or what it is: the company, or the kind of work. */
+  context: string;
+  blurb: string;
+  /** Shown as a small marker on work still in progress. */
+  current?: boolean;
+  /** Source repository, where it is public. */
+  href?: string;
+};
+
+/** Real work, most recent first. */
+export const PROJECTS: Project[] = [
+  {
+    title: "QHSE compliance platform",
+    context: "Current",
+    blurb:
+      "A platform for managing quality, health, safety and environmental compliance.",
+    current: true,
+  },
+  {
+    title: "Emperror",
+    context: "Experiment",
+    blurb: "An experimental coding agent.",
+    href: "https://github.com/shaheersystems/emperror",
+  },
+  {
+    title: "Antiflow",
+    context: "Backend library",
+    blurb:
+      "A backend library for building workflows, in the spirit of n8n, defined entirely in JSON.",
+    href: "https://github.com/shaheersystems-inc/antiflow",
+  },
+  {
+    title: "Domain reseller platform",
+    context: "Navicosoft",
+    blurb: "Helped build the platform resellers use to register and manage domains.",
+  },
+  {
+    title: "Hosting management platform",
+    context: "Navicosoft",
+    blurb: "Built with the same team: the platform for managing hosting services.",
+  },
+];
+
 export type Column = {
   heading: string;
   entries: Entry[];
@@ -34,27 +79,6 @@ export const COLUMNS: Column[] = [
         blurb: "Tools and experiments, in the open.",
         href: GITHUB,
         external: true,
-      },
-    ],
-  },
-  {
-    heading: "Projects",
-    entries: [
-      {
-        title: "Ledger",
-        blurb: "Real-time finance dashboard. 1.2M transactions a day.",
-      },
-      {
-        title: "Atlas Health",
-        blurb: "Patient scheduling across a clinic network.",
-      },
-      {
-        title: "Kiln",
-        blurb: "Headless storefront. 0.8s median load.",
-      },
-      {
-        title: "Signal",
-        blurb: "Newsroom analytics. Five teams, one source of truth.",
       },
     ],
   },

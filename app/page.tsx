@@ -1,6 +1,7 @@
-import { Field } from "@/components/field/field";
+import { AsciiBackground } from "@/components/site/ascii-background";
 import { EMAIL, GITHUB } from "@/components/site/content";
 import { LinkColumns } from "@/components/site/link-columns";
+import { ProjectGrid } from "@/components/site/project-grid";
 import { Reveal } from "@/components/site/reveal";
 import { SiteFooter } from "@/components/site/site-footer";
 
@@ -10,12 +11,13 @@ import { SiteFooter } from "@/components/site/site-footer";
  * already on screen.
  *
  * The column is 40rem wide and the type is set at 14px — a measure of roughly
- * 75 characters, the long end of comfortable, which gives the three-column
- * index below room to breathe.
+ * 75 characters, the long end of comfortable, which gives the project grid
+ * and the two-column index below room to breathe.
  */
 export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
+      <AsciiBackground />
       <main className="mx-auto w-full max-w-[40rem] flex-1 px-6 pt-24 pb-24 text-sm leading-[1.75] sm:pt-32">
         <Reveal as="section">
           <h1 className="font-medium text-ink">Shaheer</h1>
@@ -23,34 +25,31 @@ export default function Home() {
           <div className="mt-6 space-y-4 text-muted-ink">
             <p>
               <Lede>Building systems.</Lede> Full-stack engineer working the
-              whole depth of a product — data model, API, interface. Six years
-              of it, mostly in fintech, health, and commerce, where downtime is
-              expensive and details get noticed.
+              whole depth of a product — data model, API, interface. Three
+              years of it, on platforms where downtime is expensive and details
+              get noticed.
             </p>
             <p>
-              In the past I&rsquo;ve built a finance dashboard clearing over a
-              million transactions a day, a scheduling platform for a network
-              of clinics, and a storefront that renders at the edge in under a
-              second.
+              At Navicosoft I helped build a domain reseller platform and a
+              hosting management platform. Right now I&rsquo;m building a
+              platform for QHSE compliance.
             </p>
           </div>
         </Reveal>
 
-        {/* Sits in the gap between the introduction and the index, where the
-            page would otherwise just be empty. Bleeds past the column on wider
-            screens and is masked at every edge, so it reads as ambient rather
-            than as a framed illustration. */}
-        <Reveal className="mt-10 mb-12 sm:-mx-16" y={0}>
-          <Field className="fade-edges" />
-        </Reveal>
+        <div className="mt-16">
+          <ProjectGrid />
+        </div>
 
-        <LinkColumns />
+        <div className="mt-16">
+          <LinkColumns />
+        </div>
 
         <Reveal as="section" className="mt-16">
           <h2 className="font-medium text-ink">Now</h2>
           <div className="mt-6 space-y-4 text-muted-ink">
             <p>
-              Six years in, the part that still holds my attention is the
+              Three years in, the part that still holds my attention is the
               unglamorous middle: the schema, the failure paths, the query that
               has to stay fast at a hundred times the traffic.{" "}
               <Lede>None of it ever gets demoed</Lede>, and all of it decides

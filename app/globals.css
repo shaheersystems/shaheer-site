@@ -138,12 +138,13 @@
      and `ink` its opposite in both. */
   --on-ink: var(--canvas);
 
-  /* WebGL cannot read an oklch() custom property — THREE.Color parses hex,
-     rgb() and named colors only. The field reads these tokens instead, so the
-     canvas stays on the same ink and accent as the text around it. Kept
-     numerically in step with `--ink` and `--brand`. */
+  /* The ASCII background draws on a 2D canvas and parses these as plain hex,
+     not oklch(), so it works in every browser that has a canvas. `--viz-ink`
+     is kept numerically in step with `--ink`; `--viz-glow` is the clicked
+     ripple, a brighter blue than `--brand` because it has to read as light
+     rather than as a link. */
   --viz-ink: #211f1b;
-  --viz-brand: #32669a;
+  --viz-glow: #2563eb;
 
   /* shadcn scale mapped onto the ramp above so its primitives inherit the
      same system instead of running a parallel palette. */
@@ -203,7 +204,7 @@
   --brand: var(--o-400);
   --on-brand: var(--n-50);
   --viz-ink: #efeeec;
-  --viz-brand: #79a9db;
+  --viz-glow: #4f9dff;
 
   --destructive: oklch(0.7 0.19 25);
 }
@@ -270,16 +271,6 @@
   &:hover {
     text-decoration-color: var(--ink);
   }
-}
-
-/* Fades the ambient field into the page on all four sides so it reads as part
-   of the column rather than as a framed illustration dropped into it. Two
-   gradients intersected, so the corners fall off in both directions. */
-@utility fade-edges {
-  mask-image:
-    linear-gradient(to right, transparent, black 16%, black 84%, transparent),
-    linear-gradient(to bottom, transparent, black 18%, black 78%, transparent);
-  mask-composite: intersect;
 }
 
 @media (prefers-reduced-motion: reduce) {
